@@ -7,7 +7,9 @@ const { join } = require('path');
  */
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production' ? '/list/' : '/',
+  // disabled next line to have this build on netlify
+  // publicPath: process.env.NODE_ENV === 'production' ? '/list/' : '/',
+  publicPath: '/',
   devServer: {
     overlay: {
       errors: true,
