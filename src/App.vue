@@ -1,16 +1,18 @@
 <template lang="pug">
 // It's fun to debug indentaion errors
-div(:class="$style.page")
+div
   main(:class="$style.container")
-    SearchBar(v-model:search-text="searchText"
-      :matchFound="!items.find((i) => i.content === searchText)"
-      @submit="submit"
-    )
+    section(:class="$style.searchbar")
+      SearchBar(v-model:search-text="searchText"
+        :matchFound="!items.find((i) => i.content === searchText)"
+        @submit="submit"
+      )
     // Display results
-    List( :results="search(searchText)" :highlight="items.find((i) => i.content === searchText)?.id" @deleteItem="(id) => removeItemById(id)" )
-  aside(:class="$style.sidebar")
-    // Display sort options
-    SearchOptions(:options="options" @selectOption="setSearchOptions")
+    section(:class="$style.list")
+      List( :results="search(searchText)" :highlight="items.find((i) => i.content === searchText)?.id" @deleteItem="(id) => removeItemById(id)" )
+    aside(:class="$style.options")
+      // Display sort options
+      SearchOptions(:options="options" @selectOption="setSearchOptions")
 </template>
 
 <script setup lang="ts">
@@ -37,7 +39,7 @@ function search(value: string): IListItem[] {
   // search for a value
   const matches = items.value.filter((item) => item.content.includes(value));
   // return results, default to all items
-  const results =  matches || items.value;
+  const results = matches || items.value;
   // sort results
   return results.sort((a, b) => {
     switch (options.value.sortBy) {
@@ -85,10 +87,7 @@ function submit(value: string) {
 }
 
 function removeItemById(id: number) {
-  console.log('removeItemById', id);
-  console.log('items', items.value);
   const filteredItems = items.value.filter((item) => item.id !== id);
-  console.log('filteredItems', filteredItems);
   items.value = filteredItems;
 }
 
@@ -98,7 +97,6 @@ onMounted(() => {
   if (existingItems) {
     // TODO: make sure this doesn't cause a crash when user edits the localStorage values
     items.value = JSON.parse(existingItems).map((item: any) => ({
-      ...item,
       ...item,
       createdAt: new Date(item.createdAt), // convert date string to date object
     }));
@@ -123,25 +121,27 @@ onMounted(() => {
 </script>
 
 <style lang="scss" module>
-// Style
-.page {
-  width: 100%;
-  min-height: 100vh;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: start;
-}
 .container {
-  width: 800px;
-  margin-top: 100px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 800px 1fr;
+  grid-template-rows: auto 1fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    '. searchbar .'
+    '. list options';
 }
-.sidebar {
-  width: 300px;
+.searchbar {
+  grid-area: searchbar;
   margin-top: 100px;
 }
 .list {
-  height: 400px;
+  grid-area: list;
+  height: 100%;
+}
+.options {
+  grid-area: options;
+  margin-top: 30px;
+  margin-left: 60px;
 }
 </style>

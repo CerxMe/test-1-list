@@ -1,5 +1,4 @@
-@use 'sass/color';
-
+@use 'color';
 @import url('//fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 
 *,
@@ -7,16 +6,17 @@
 *::after {
   box-sizing: border-box;
   margin: 0;
+  padding: 0;
 }
 
 html,
 body {
-  margin: 0;
-  padding: 0;
+  height: 100%;
+  min-height: 100%;
 }
 
 html {
-  color: color.$text;
+  color: color.$text-primary;
   font-family: 'Open Sans', sans-serif;
   font-size: 87.5%;
   -webkit-font-smoothing: antialiased;
@@ -25,14 +25,13 @@ html {
 
 // If you need to style the #app element
  :global(#app) {
-   width: 100%;
-   height: 100%;
-   min-height: 100vh;
+   align-items: center;
+   background: linear-gradient(180deg, color.$bg-gradient-from 0%, color.$bg-gradient-to 100%);
    display: flex;
    flex-direction: column;
-   align-items: center;
-   justify-content: start;
-   background: linear-gradient(180deg, #FFFFFF 0%, #DEE2E6 100%);
+   justify-content: flex-start;
+   min-height: 100vh;
+   width: 100%;
  }
 //For debugging:
 //* {

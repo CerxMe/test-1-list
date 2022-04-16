@@ -5,16 +5,19 @@ main(:class="$style.searchBar")
     :value="searchText"
     @input="$emit('update:searchText', $event.target.value)"
     @keyup.enter="submit(searchText)"
-    @keyup.esc="$emit('update:searchText', '')"
+    @keydown.esc="$emit('update:searchText', '')"
   )
   div(:class="$style.controls" v-if="searchText !== ''")
-    button(type="button" @click="$emit('update:searchText', '')") clear
-    button(type="button" :disabled='!matchFound' @click="submit(searchText)") add
+    button(:class="$style.cancel" type="button" @click="$emit('update:searchText', '')")
+      Cancel
+    button(:class="$style.add" type="button" :disabled='!matchFound' @click="submit(searchText)")
+      Add
 </template>
 
-<script setup lang="ts">
-import { ref, defineEmits, defineProps, onMounted, onUnmounted } from "vue";
-
+<script lang="ts" setup>
+import { defineEmits, defineProps } from 'vue';
+import Add from './icons/Add.vue';
+import Cancel from './icons/Cancel.vue';
 // define events
 const emit = defineEmits(['update:searchText', 'submit']);
 
@@ -39,27 +42,27 @@ function submit(searchText: string) {
 
 <style lang="scss" module scoped>
 @use '../sass/_color.scss';
+
 .searchBar {
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 6px;
-  background: #f1f3f5;
+  background: color.$input-bg;
   height: 60px;
+
   input {
     font-size: 14px;
-    color: #212529;
+    color: color.$text-primary;
     background: none;
     width: 100%;
     height: 100%;
     padding-left: 20px;
     border: none;
     outline: none;
+
     &::placeholder {
-      color: #adb5bd;
-    }
-    &:focus { // super subtle
-      box-shadow: 0px 0px 40px #FFFFFFFD;
+      color: color.$input-placeholder;
     }
   }
 
@@ -69,11 +72,24 @@ function submit(searchText: string) {
     align-items: center;
     justify-content: center;
     height: 100%;
+
     button {
+      margin-right: 20px;
       height: 100%;
-      width: 60px;
       border: none;
       outline: none;
+      background: none;
+      cursor: pointer;
+    }
+    .add {
+      color: color.$cyan;
+      &:disabled {
+        color: color.$input-placeholder;
+        cursor: not-allowed;
+      }
+    }
+    .cancel {
+      color: color.$red;
     }
   }
 }

@@ -1,6 +1,11 @@
 **live at: https://jocular-parfait-eae439.netlify.app**
 
 spaghetti; covers all the assignment requirements
+
+the design does not specify how to do mobile, so it's not mobile friendly
+
+not bothering with alphabetically ordering my css (lol), the linter doesn't work with the `--fix` option on vue component files.
+there's also a bunch of warnings about unused variables and imports, but I'm not sure how to fix 'em. everything works fine on my machine tho.
 ___
 # List
 

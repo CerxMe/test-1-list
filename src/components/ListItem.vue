@@ -1,23 +1,26 @@
 <template lang="pug">
 section(:class="$style.result")
   header(v-if="matches" )
-    h2(:class="$style.title") match
+    Check
   main
     h2(:class="$style.title")
       | {{ content }}
     p(:class="$style.description")
-      | \#{{ id }}
+      span(v-if="matches" ) Exact match
+      | {{ matches ? ', ' : ''}}\#{{ id }}
   footer
     p(:class="$style.added")
-    | {{ timeAgo }}
+      | {{ timeAgo }}
     button.delete(:class="$style.delete" @click="$emit('delete', id)")
-      | Delete
+      Trash
 </template>
 
 <script setup lang="ts">
-import { defineProps,defineEmits, ref, onMounted, onUnmounted } from "vue";
-import { formatDistance } from "date-fns";
-import IListItem from "../interfaces/IListItem";
+import { defineProps, defineEmits, ref, onMounted, onUnmounted } from 'vue';
+import { formatDistance } from 'date-fns';
+import IListItem from '../interfaces/IListItem';
+import Trash from './icons/Trash.vue';
+import Check from './icons/Check.vue';
 const props = defineProps({
   result: {
     type: Object as () => IListItem,
@@ -35,6 +38,7 @@ const timeAgo = ref(formatTime(new Date(createdAt)));
 
 // bonus points for realtime
 // add a ticker to update the timeAgo every minute
+// TODO: only update the value when it needs to be updated
 let interval: any = null;
 onMounted(() => {
   interval = setInterval(() => {
@@ -48,6 +52,7 @@ onUnmounted(() => {
 </script>
 
 <style lang="scss" module>
+@use '../sass/color';
 .searchResults {
   display: flex;
   flex-direction: column;
@@ -68,31 +73,56 @@ onUnmounted(() => {
   background: none;
   padding-left: 20px;
 
-  main{
+  main {
     width: 100%;
     h2 {
       font-size: 14px;
       font-weight: normal;
-      color: #212529;
+      color: color.$text-primary;
     }
     p {
-      color: #868E96;
+      color: color.$text-secondary;
       font-size: 12px;
+      span {
+        color: color.$cyan;
+      }
     }
   }
-  header, footer{
+  header,
+  footer {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
   }
+  header {
+    margin-right: 20px;
+    color: color.$cyan;
+  }
   footer {
     flex-direction: row;
+    align-items: center;
+    height: 100%;
+    p {
+      text-align: right;
+      min-width: 140px; // prevents the text from going to newline
+      font-size: 13px;
+      color: color.$text-primary;
+    }
+    button {
+      background: none;
+      border: none;
+      outline: none;
+      height: 100%;
+      margin: auto 20px;
+      color: color.$red;
+      cursor: pointer;
+    }
   }
 
   &:hover {
-    box-shadow: 0px 0px 40px #0000000D;
-    background-color: #FFFFFF;
+    box-shadow: 0px 0px 40px color.$list-item-hover-shadow;
+    background-color: color.$list-item-hover-bg;
     .delete {
       display: block;
     }
