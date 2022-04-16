@@ -27,6 +27,14 @@ module.exports = {
     },
   },
   chainWebpack(config) {
+    // vue-svg-loader
+    config.module.rule('svg')
+      .use('vue-loader')
+      .loader('vue-loader') // or `vue-loader-v16` if you are using a preview support of Vue 3 in Vue CLI
+      .end()
+      .use('vue-svg-loader')
+      .loader('vue-svg-loader');
+
     // Resolve from `src` directory
     config.resolve.modules.prepend(join(process.cwd(), 'src'));
     // Use `baseUrl` and `paths` from tsconfig.json

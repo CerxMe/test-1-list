@@ -1,3 +1,7 @@
+**live at: https://jocular-parfait-eae439.netlify.app**
+
+spaghetti; covers all the assignment requirements
+___
 # List
 
 Create a list application from the provided design file [list.xd](list.xd) (can
