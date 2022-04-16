@@ -4,12 +4,12 @@ div
   main(:class="$style.container")
     section(:class="$style.searchbar")
       SearchBar(v-model:search-text="searchText"
-        :matchFound="!items.find((i) => i.content === searchText)"
+        :matchFound="!items.find((i) => i.content.toLowerCase() === searchText.toLowerCase())"
         @submit="submit"
       )
     // Display results
     section(:class="$style.list")
-      List( :results="search(searchText)" :highlight="items.find((i) => i.content === searchText)?.id" @deleteItem="(id) => removeItemById(id)" )
+      List( :results="search(searchText)" :highlight="items.find((i) => i.content.toLowerCase() === searchText.toLowerCase())?.id" @deleteItem="(id) => removeItemById(id)" )
     aside(:class="$style.options")
       // Display sort options
       SearchOptions(:options="options" @selectOption="setSearchOptions")
@@ -37,7 +37,9 @@ const options = ref<ISearchOptions>({
 // TODO: use a better search method (e.g. fuzzy search) for partial matches
 function search(value: string): IListItem[] {
   // search for a value
-  const matches = items.value.filter((item) => item.content.includes(value));
+  const matches = items.value.filter((item) =>
+    item.content.toLowerCase().includes(value.toLowerCase())
+  );
   // return results, default to all items
   const results = matches || items.value;
   // sort results
@@ -72,14 +74,15 @@ function getMaxListId(): number {
 }
 
 function submit(value: string) {
-  console.log('submit', value);
   // Add item to the list if they don't already exist
   const item = {
     id: getMaxListId(),
     content: value,
     createdAt: new Date(),
   };
-  if (!items.value.find((i) => i.content === value)) {
+  if (
+    !items.value.find((i) => i.content.toLowerCase() === value.toLowerCase())
+  ) {
     items.value.push(item);
     return true;
   }
