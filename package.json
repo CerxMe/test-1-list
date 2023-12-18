@@ -1,44 +1,22 @@
 {
-  "name": "list",
-  "version": "0.1.0",
+  "name": "catgrill",
   "private": true,
+  "version": "0.0.1",
+  "type": "module",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "tauri": "tauri"
   },
   "dependencies": {
-    "core-js": "^3.17.3",
-    "date-fns": "^2.25.0",
-    "lodash": "^4.17.21",
-    "vue": "^3.2.19"
+    "date-fns": "^2.30.0",
+    "pug": "^3.0.2",
+    "stylus": "^0.62.0",
+    "vue": "^3.3.4"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.175",
-    "@typescript-eslint/eslint-plugin": "^4.31.1",
-    "@typescript-eslint/parser": "^4.31.1",
-    "@vue/cli-plugin-babel": "^4.5.13",
-    "@vue/cli-plugin-eslint": "^4.5.13",
-    "@vue/cli-plugin-typescript": "^4.5.13",
-    "@vue/cli-service": "^4.5.13",
-    "@vue/compiler-sfc": "^3.2.19",
-    "@vue/eslint-config-prettier": "^6.0.0",
-    "@vue/eslint-config-typescript": "^7.0.0",
-    "eslint": "^6.8.0",
-    "eslint-plugin-prettier": "^3.4.1",
-    "eslint-plugin-vue": "^7.18.0",
-    "prettier": "^2.4.1",
-    "pug": "^3.0.2",
-    "pug-plain-loader": "^1.1.0",
-    "sass": "^1.41.1",
-    "sass-loader": "^10.2.0",
-    "stylelint": "^13.13.1",
-    "stylelint-config-recommended-scss": "^4.3.0",
-    "stylelint-order": "^4.1.0",
-    "stylelint-scss": "^3.21.0",
-    "svg-transform-loader": "^2.0.13",
-    "tsconfig-paths": "^3.11.0",
-    "tsconfig-paths-webpack-plugin": "^3.5.1",
-    "typescript": "^4.4.3"
+    "@vitejs/plugin-vue": "^4.2.3",
+    "vite": "^4.4.4"
   }
 }

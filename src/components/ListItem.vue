@@ -1,24 +1,24 @@
 <template lang="pug">
-section(:class="$style.result")
-  header(v-if="matches" )
+section.result
+  header(v-if="matches")
     Check
   main
-    h2(:class="$style.title")
+    h2.title
       | {{ content }}
-    p(:class="$style.description")
+    p.description
       span(v-if="matches" ) Exact match
       | {{ matches ? ', ' : ''}}\#{{ id }}
   footer
-    p(:class="$style.added")
+    p.added
       | {{ timeAgo }}
-    button.delete(:class="$style.delete" @click="$emit('delete', id)")
+    button.delete(@click="$emit('delete', id)")
       Trash
 </template>
 
 <script setup lang="ts">
 import { defineProps, defineEmits, ref, onMounted, onUnmounted } from 'vue';
 import { formatDistance } from 'date-fns';
-import IListItem from '../interfaces/IListItem';
+import type {IListItem}  from '../interfaces/IListItem';
 import Trash from './icons/Trash.vue';
 import Check from './icons/Check.vue';
 const props = defineProps({
@@ -51,81 +51,68 @@ onUnmounted(() => {
 });
 </script>
 
-<style lang="scss" module>
-@use '../sass/color';
-.searchResults {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin-top: 30px;
-}
-.delete {
-  display: none;
-}
-.result {
-  display: flex;
-  align-items: center;
-  height: 70px;
-  width: 100%;
-  border-radius: 6px;
-  background: none;
-  padding-left: 20px;
+<style lang="stylus" scoped>
+@import "../theme.styl"
 
-  main {
-    width: 100%;
-    h2 {
-      font-size: 14px;
-      font-weight: normal;
-      color: color.$text-primary;
-    }
-    p {
-      color: color.$text-secondary;
-      font-size: 12px;
-      span {
-        color: color.$cyan;
-      }
-    }
-  }
+.searchResults 
+  display flex
+  flex-direction column
+  align-items center
+  justify-content center
+  width 100%
+  margin-top 30px
+
+.delete 
+  display none
+
+.result 
+  display flex
+  align-items center
+  height 70px
+  width 100%
+  border-radius 6px
+  background none
+  padding-left 20px
+  main 
+    width 100%
+    h2 
+      font-size 14px
+      font-weight normal
+      color $text-primary
+    p 
+      color $text-secondary
+      font-size 12px
+      span 
+        color $cyan
   header,
-  footer {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-  }
-  header {
-    margin-right: 20px;
-    color: color.$cyan;
-  }
-  footer {
-    flex-direction: row;
-    align-items: center;
-    height: 100%;
-    p {
-      text-align: right;
-      min-width: 140px; // prevents the text from going to newline
-      font-size: 13px;
-      color: color.$text-primary;
-    }
-    button {
-      background: none;
-      border: none;
-      outline: none;
-      height: 100%;
-      margin: auto 20px;
-      color: color.$red;
-      cursor: pointer;
-    }
-  }
-
-  &:hover {
-    box-shadow: 0px 0px 40px color.$list-item-hover-shadow;
-    background-color: color.$list-item-hover-bg;
-    .delete {
-      display: block;
-    }
-  }
-}
+  footer 
+    display flex
+    flex-direction column
+    align-items flex-start
+    justify-content center
+  header 
+    margin-right 20px
+    color $cyan
+  footer 
+    flex-direction row
+    align-items center
+    height 100%
+    p 
+      text-align right
+      min-width 140px // prevents the text from going to newline
+      font-size 13px
+      color $text-primary
+    button 
+      background none
+      border none
+      outline none
+      height 100%
+      margin auto 20px
+      color $red
+      cursor pointer
+  &hover 
+    box-shadow 0px 0px 40px $list-item-hover-shadow
+    background-color $list-item-hover-bg
+    .delete 
+      display block
 </style>

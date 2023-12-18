@@ -1,28 +1,27 @@
 <template lang="pug">
 // It's fun to debug indentaion errors
 div
-  main(:class="$style.container")
-    section(:class="$style.searchbar")
+  main.container
+    section.searchbar
       SearchBar(v-model:search-text="searchText"
         :matchFound="!items.find((i) => i.content.toLowerCase() === searchText.toLowerCase())"
         @submit="submit"
       )
     // Display results
-    section(:class="$style.list")
+    section.list
       List( :results="search(searchText)" :highlight="items.find((i) => i.content.toLowerCase() === searchText.toLowerCase())?.id" @deleteItem="(id) => removeItemById(id)" )
-    aside(:class="$style.options")
+    aside.options
       // Display sort options
       SearchOptions(:options="options" @selectOption="setSearchOptions")
 </template>
 
 <script setup lang="ts">
-// Note: no idea what I'm doing with TypeScript
 import SearchBar from './components/SearchBar.vue';
-import SearchOptions from './components/SearchOptions.vue';
 import List from './components/List.vue';
-import IListItem from './interfaces/IListItem';
-import ISearchOptions from './interfaces/ISearchOptions';
+import type {IListItem} from './interfaces/IListItem'
+import type {ISearchOptions} from './interfaces/ISearchOptions';
 import { ref, onMounted } from 'vue';
+import SearchOptions from "./components/SearchOptions.vue";
 
 // vars
 const searchText = ref('');
@@ -123,28 +122,46 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" module>
-.container {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 800px 1fr;
-  grid-template-rows: auto 1fr;
-  gap: 0px 0px;
-  grid-template-areas:
-    '. searchbar .'
-    '. list options';
-}
-.searchbar {
-  grid-area: searchbar;
-  margin-top: 100px;
-}
-.list {
-  grid-area: list;
-  height: 100%;
-}
-.options {
-  grid-area: options;
-  margin-top: 30px;
-  margin-left: 60px;
-}
+<style lang="stylus">
+// Global Import
+@import "./theme.styl"
+*
+  display block
+  box-sizing border-box
+  margin 0
+  padding 0
+html,body
+  height 100%
+  min-height 100%
+html
+  color $text-primary
+  font-family 'Open Sans', sans-serif
+  font-size 87.5%
+  -webkit-font-smoothing antialiased
+  -moz-osx-font-smoothing grayscale
+// If you need to style the #app element
+#app
+  align-items center
+  background linear-gradient(180deg, $bg-gradient-from 0%, $bg-gradient-to 100%)
+  display flex
+  flex-direction column
+  justify-content flex-start
+  min-height 100vh
+.container
+  width 100%
+  display grid
+  grid-template-columns 1fr 800px 1fr
+  grid-template-rows auto 1fr
+  gap 0px 0px
+  grid-template-areas '. searchbar .' '. list options'
+.searchbar
+  grid-area searchbar
+  margin-top 100px
+.list
+  grid-area list
+  height 100%
+.options
+  grid-area options
+  margin-top 30px
+  margin-left 60px
 </style>

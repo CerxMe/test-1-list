@@ -1,15 +1,16 @@
 <template lang="pug">
-section(:class="$style.searchResults")
+section.searchResults
   .noResults(v-if="!results.length")
     h3 Added items will appear here.
-  div(:class="$style.results" v-for="result in results" v-else)
+  .results(v-for="result in results" v-else)
     ListItem(:result="result" :key='result.id' :matches="highlight === result.id" @delete="(id) => $emit('deleteItem', id)")
 </template>
 
 <script setup lang="ts">
 import ListItem from './ListItem.vue';
 import { defineProps, defineEmits } from 'vue';
-import IListItem from '../interfaces/IListItem';
+import type {IListItem} from '../interfaces/IListItem'
+
 const props = defineProps({
   results: {
     type: Object as () => [IListItem],
@@ -22,19 +23,18 @@ const props = defineProps({
 const emit = defineEmits(['deleteItem']);
 </script>
 
-<style lang="scss" module>
-.searchResults {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin-top: 30px;
-  .results {
-    width: 100%;
-  }
-}
-.delete {
-  display: none;
-}
+<style lang="stylus" scoped>
+@import "../theme.styl"
+
+.searchResults
+  display flex
+  flex-direction column
+  align-items center
+  justify-content center
+  width 100%
+  margin-top 30px
+  .results
+    width 100%
+.delete
+  display none
 </style>

@@ -1,5 +1,5 @@
 <template lang="pug">
-main(:class="$style.searchBar")
+main.searchBar
   input(type="text"
     placeholder="Search or Add..."
     :value="searchText"
@@ -7,10 +7,10 @@ main(:class="$style.searchBar")
     @keyup.enter="submit(searchText)"
     @keydown.esc="$emit('update:searchText', '')"
   )
-  div(:class="$style.controls" v-if="searchText !== ''")
-    button(:class="$style.cancel" type="button" @click="$emit('update:searchText', '')")
+  .controls(v-if="searchText !== ''")
+    button.cancel(type="button" @click="$emit('update:searchText', '')")
       Cancel
-    button(:class="$style.add" type="button" :disabled='!matchFound' @click="submit(searchText)")
+    button.add( type="button" :disabled='!matchFound' @click="submit(searchText)")
       Add
 </template>
 
@@ -40,57 +40,44 @@ function submit(searchText: string) {
 }
 </script>
 
-<style lang="scss" module scoped>
-@use '../sass/_color.scss';
-
-.searchBar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 6px;
-  background: color.$input-bg;
-  height: 60px;
-
-  input {
-    font-size: 14px;
-    color: color.$text-primary;
-    background: none;
-    width: 100%;
-    height: 100%;
-    padding-left: 20px;
-    border: none;
-    outline: none;
-
-    &::placeholder {
-      color: color.$input-placeholder;
-    }
-  }
-
-  .controls {
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-
-    button {
-      margin-right: 20px;
-      height: 100%;
-      border: none;
-      outline: none;
-      background: none;
-      cursor: pointer;
-    }
-    .add {
-      color: color.$cyan;
-      &:disabled {
-        color: color.$input-placeholder;
-        cursor: not-allowed;
-      }
-    }
-    .cancel {
-      color: color.$red;
-    }
-  }
-}
+<style lang="stylus" scoped>
+@import "../theme.styl"
+.searchBar 
+  display flex
+  align-items center
+  justify-content center
+  border-radius 6px
+  background $input-bg
+  height 60px
+  input 
+    font-size 14px
+    color $text-primary
+    background none
+    width 100%
+    height 100%
+    padding-left 20px
+    border none
+    outline none
+    &:placeholder
+      color $input-placeholder
+.controls
+  display inline-flex
+  flex-direction row
+  align-items center
+  justify-content center
+  height 100%
+  button
+    margin-right 20px
+    height 100%
+    border none
+    outline none
+    background none
+    cursor pointer
+  .add
+    color $cyan
+    &:disabled
+      color $input-placeholder
+      cursor not-allowed
+  .cancel
+    color $red
 </style>
