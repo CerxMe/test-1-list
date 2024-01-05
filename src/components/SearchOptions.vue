@@ -28,7 +28,6 @@ defineEmits(['selectOption']);
 
 <style lang="stylus" scoped>
 @import "../theme.styl"
-
 .options
   display flex
   flex-direction column

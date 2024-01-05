@@ -4,13 +4,14 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --force",
     "build": "vite build",
     "preview": "vite preview",
     "tauri": "tauri"
   },
   "dependencies": {
     "date-fns": "^2.30.0",
+    "lifehash-vue": "^0.1.6",
     "pug": "^3.0.2",
     "stylus": "^0.62.0",
     "vue": "^3.3.4"

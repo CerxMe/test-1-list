@@ -1,18 +1,18 @@
 <template lang="pug">
-// It's fun to debug indentaion errors
-div
-  main.container
-    section.searchbar
-      SearchBar(v-model:search-text="searchText"
-        :matchFound="!items.find((i) => i.content.toLowerCase() === searchText.toLowerCase())"
-        @submit="submit"
-      )
-    // Display results
-    section.list
-      List( :results="search(searchText)" :highlight="items.find((i) => i.content.toLowerCase() === searchText.toLowerCase())?.id" @deleteItem="(id) => removeItemById(id)" )
-    aside.options
-      // Display sort options
-      SearchOptions(:options="options" @selectOption="setSearchOptions")
+main.container
+  section.searchbar
+    SearchBar(v-model:search-text="searchText"
+      :matchFound="!items.find((i) => i.content.toLowerCase() === searchText.toLowerCase())"
+      @submit="submit"
+    )
+  // Display results
+  section.list
+    List( :results="search(searchText)" :highlight="items.find((i) => i.content.toLowerCase() === searchText.toLowerCase())?.id" @deleteItem="(id) => removeItemById(id)" )
+    //Grill
+
+  aside.options
+    // Display sort options
+    SearchOptions(:options="options" @selectOption="setSearchOptions")
 </template>
 
 <script setup lang="ts">
@@ -22,6 +22,7 @@ import type {IListItem} from './interfaces/IListItem'
 import type {ISearchOptions} from './interfaces/ISearchOptions';
 import { ref, onMounted } from 'vue';
 import SearchOptions from "./components/SearchOptions.vue";
+import Grill from "./components/Grill.vue";
 
 // vars
 const searchText = ref('');
@@ -123,10 +124,8 @@ onMounted(() => {
 </script>
 
 <style lang="stylus">
-// Global Import
 @import "./theme.styl"
 *
-  display block
   box-sizing border-box
   margin 0
   padding 0
@@ -139,7 +138,6 @@ html
   font-size 87.5%
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
-// If you need to style the #app element
 #app
   align-items center
   background linear-gradient(180deg, $bg-gradient-from 0%, $bg-gradient-to 100%)
@@ -153,15 +151,15 @@ html
   grid-template-columns 1fr 800px 1fr
   grid-template-rows auto 1fr
   gap 0px 0px
-  grid-template-areas '. searchbar .' '. list options'
+  grid-template-areas 'l m1 r' 'l m2 r'
 .searchbar
-  grid-area searchbar
+  grid-area m1
   margin-top 100px
 .list
-  grid-area list
+  grid-area m2
   height 100%
 .options
-  grid-area options
+  grid-area r
   margin-top 30px
   margin-left 60px
 </style>

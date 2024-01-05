@@ -1,7 +1,8 @@
 <template lang="pug">
 section.result
-  header(v-if="matches")
-    Check
+  header
+    Check(v-if="matches")
+    Identicon(:input="content" :version="3").icony
   main
     h2.title
       | {{ content }}
@@ -21,6 +22,8 @@ import { formatDistance } from 'date-fns';
 import type {IListItem}  from '../interfaces/IListItem';
 import Trash from './icons/Trash.vue';
 import Check from './icons/Check.vue';
+import {Identicon} from 'lifehash-vue';
+
 const props = defineProps({
   result: {
     type: Object as () => IListItem,
@@ -53,8 +56,7 @@ onUnmounted(() => {
 
 <style lang="stylus" scoped>
 @import "../theme.styl"
-
-.searchResults 
+.searchResults
   display flex
   flex-direction column
   align-items center
@@ -90,9 +92,13 @@ onUnmounted(() => {
     flex-direction column
     align-items flex-start
     justify-content center
-  header 
+  header
+    flex-direction row
     margin-right 20px
     color $cyan
+    .icony
+      max-width 42px
+      max-height 42px
   footer 
     flex-direction row
     align-items center
@@ -110,7 +116,7 @@ onUnmounted(() => {
       margin auto 20px
       color $red
       cursor pointer
-  &hover 
+  &:hover
     box-shadow 0px 0px 40px $list-item-hover-shadow
     background-color $list-item-hover-bg
     .delete 

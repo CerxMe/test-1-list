@@ -1,7 +1,7 @@
 <template lang="pug">
 main.searchBar
   input(type="text"
-    placeholder="Search or Add..."
+    placeholder=">"
     :value="searchText"
     @input="$emit('update:searchText', $event.target.value)"
     @keyup.enter="submit(searchText)"
@@ -42,13 +42,13 @@ function submit(searchText: string) {
 
 <style lang="stylus" scoped>
 @import "../theme.styl"
-.searchBar 
+.searchBar
   display flex
   align-items center
   justify-content center
   border-radius 6px
   background $input-bg
-  height 60px
+  height 42px
   input 
     font-size 14px
     color $text-primary
@@ -56,8 +56,11 @@ function submit(searchText: string) {
     width 100%
     height 100%
     padding-left 20px
-    border none
+    border-radius 6px
     outline none
+    border 1px solid rgba($input-placeholder,.2)
+    &:active
+      border 1px solid $input-placeholder
     &:placeholder
       color $input-placeholder
 .controls
@@ -66,6 +69,7 @@ function submit(searchText: string) {
   align-items center
   justify-content center
   height 100%
+  margin-left 20px
   button
     margin-right 20px
     height 100%

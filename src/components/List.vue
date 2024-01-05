@@ -24,8 +24,6 @@ const emit = defineEmits(['deleteItem']);
 </script>
 
 <style lang="stylus" scoped>
-@import "../theme.styl"
-
 .searchResults
   display flex
   flex-direction column
